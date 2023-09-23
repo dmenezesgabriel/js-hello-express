@@ -1,5 +1,6 @@
 version: "3"
 services:
+  # Mongo Database
   mongodb:
     image: mongo:latest
     container_name: mongodb
@@ -10,25 +11,36 @@ services:
     networks:
       - mongo-network
 
+  # Mongo client UI
+  # docker compose up -d
   mongo-compass:
     image: mongo-express
     container_name: mongo-compass
-    env_file:
-      - .env
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_MONGODB_PORT: "27017"
     ports:
       - "8081:8081"
     networks:
       - mongo-network
 
+  # Administrative atlas tasks
+  # mongodb run --rm mongo-atlas
   mongo-atlas:
     image: mongodb/atlas
     container_name: mongo-atlas
-    environment:
     stdin_open: true # Enable reading from the standard input
     tty: true # Allocate a pseudo-TTY
-    ports:
-      - "8080:8081"
     command: /bin/bash
+
+  # mongodb shell for remote server
+  # docker compose run --rm mongsh-atlas
+  mongosh-atlas:
+    image: mongo
+    container_name: mongosh-atlas
+    stdin_open: true # Enable reading from the standard input
+    tty: true # Allocate a pseudo-TTY
+    command: /bin/bash -c 'mongosh "mongodb+srv://$MONGODB_SERVER_HOST" --apiVersion 1 --username $MONGODB_USERNAME'
 
 networks:
   mongo-network:
