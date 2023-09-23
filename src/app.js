@@ -5,9 +5,33 @@ const app = express();
 app.use(express.json());
 
 const books = [
-  { id: 1, title: "Harry Potter", author: "J.K. Rowling" },
-  { id: 2, title: "Lord of the Rings", author: "J.R.R. Tolkien" },
-  { id: 3, title: "The Hobbit", author: "J.R.R. Tolkien" },
+  {
+    id: 1,
+    title: "Harry Potter",
+    author: "J.K. Rowling",
+    editor: "Bloomsbury",
+    year: 1997,
+    pages: 223,
+    language: "English",
+  },
+  {
+    id: 2,
+    title: "Lord of the Rings",
+    author: "J.R.R. Tolkien",
+    editor: "Allen & Unwin",
+    year: 1954,
+    pages: 423,
+    language: "English",
+  },
+  {
+    id: 3,
+    title: "The Hobbit",
+    author: "J.R.R. Tolkien",
+    editor: "Allen & Unwin",
+    year: 1937,
+    pages: 310,
+    language: "English",
+  },
 ];
 
 app.get("/", (req, res) => {
