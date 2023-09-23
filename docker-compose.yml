@@ -11,14 +11,31 @@ services:
     networks:
       - mongo-network
 
-  # Mongo client UI
+  # Mongo local client UI
   # docker compose up -d
   mongo-compass:
+    image: mongo-express
+    container_name: mongo-compass
+    env_file:
+      - .env
+    depends_on:
+      - mongodb
+    ports:
+      - "8081:8081"
+    networks:
+      - mongo-network
+
+  # Mongo local client UI
+  # docker compose up -d
+  mongo-compass-atlas:
     image: mongo-express
     container_name: mongo-compass
     environment:
       ME_CONFIG_MONGODB_SERVER: mongodb
       ME_CONFIG_MONGODB_PORT: "27017"
+      ME_CONFIG_MONGODB_ENABLE_CLIENT_OPTIONS: "true"
+    depends_on:
+      - mongodb
     ports:
       - "8081:8081"
     networks:
