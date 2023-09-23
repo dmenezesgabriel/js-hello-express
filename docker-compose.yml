@@ -12,6 +12,7 @@ services:
       - mongo-network
 
   # Mongo local client UI
+  # https://hub.docker.com/_/mongo-express
   # docker compose up -d
   mongo-compass:
     image: mongo-express
