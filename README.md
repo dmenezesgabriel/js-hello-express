@@ -10,6 +10,12 @@ curl -X POST -H 'Content-Type: application/json' -d '{ "id": 4, "title": "A Game
 
 ## Mongosh
 
+- **Clear console**:
+
+```sh
+cls
+```
+
 - **List Databases**:
 
 ```sh
