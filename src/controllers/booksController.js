@@ -13,8 +13,10 @@ class BookController {
   static create = async (req, res) => {
     const book = new books(req.body);
     try {
-      book.save();
-      res.status(201).json(book);
+      await book.save();
+      res
+        .status(201)
+        .json({ message: "Book created successfully", book: book });
     } catch (err) {
       return res.status(500).json({ message: err.message });
     }
@@ -23,8 +25,10 @@ class BookController {
   static update = async (req, res) => {
     const { id } = req.params;
     try {
-      books.findOneAndUpdate({ _id: id }, req.body);
-      res.status(200).json({ message: "Book updated successfully" });
+      const book = await books.findByIdAndUpdate(id, req.body);
+      res
+        .status(200)
+        .json({ message: "Book updated successfully", book: book });
     } catch (err) {
       return res.status(500).json({ message: err.message });
     }
