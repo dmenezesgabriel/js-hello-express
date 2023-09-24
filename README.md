@@ -51,3 +51,16 @@ use <db-name>
 db.<collection-name>.find()
 
 ```
+
+## TODO
+
+- HATEOAS
+- OAUTH
+- JWT
+- Keycloack
+- sweggger
+- OpenAPI
+
+## Resources
+
+- [Restful API](https://www.alura.com.br/artigos/rest-principios-e-boas-praticas)
