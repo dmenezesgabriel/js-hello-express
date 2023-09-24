@@ -8,6 +8,7 @@ const bookSchema = new mongoose.Schema({
     ref: "authors",
     required: true,
   },
+  publisher: { type: String, required: true },
 });
 
 const books = mongoose.model("books", bookSchema);

@@ -4,28 +4,7 @@ class BookController {
   static getAll = async (req, res) => {
     try {
       const result = await books.find().populate("author").exec();
-      const booksWithLinks = result.map((book) => {
-        const bookWithLink = book.toJSON();
-        bookWithLink.links = [
-          {
-            href: `/books/${book._id}`,
-            rel: "self",
-            method: "GET",
-          },
-          {
-            href: `/books/${book._id}`,
-            rel: "update",
-            method: "PUT",
-          },
-          {
-            href: `/books/${book._id}`,
-            rel: "delete",
-            method: "DELETE",
-          },
-        ];
-        return bookWithLink;
-      });
-      res.status(200).json(booksWithLinks);
+      res.status(200).json(result);
     } catch (err) {
       return res.status(500).json({ message: err.message });
     }
@@ -35,27 +14,18 @@ class BookController {
     const { id } = req.params;
     try {
       const result = await books.findById(id).populate("author").exec();
-      const bookWithLink = result.toJSON();
-      bookWithLink.links = [
-        {
-          href: `/books/${bookWithLink._id}`,
-          rel: "self",
-          method: "GET",
-        },
-        {
-          href: `/books/${bookWithLink._id}`,
-          rel: "update",
-          method: "PUT",
-        },
-        {
-          href: `/books/${bookWithLink._id}`,
-          rel: "delete",
-          method: "DELETE",
-        },
-      ];
-      res.status(200).json(bookWithLink);
+      res.status(200).json(result);
     } catch (err) {
       return res.status(400).json({ message: err.message });
+    }
+  };
+
+  static getByQuery = async (req, res) => {
+    try {
+      const result = await books.find(req.query).populate("author").exec();
+      res.status(200).json(result);
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
     }
   };
 
