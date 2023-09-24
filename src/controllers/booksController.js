@@ -10,6 +10,16 @@ class BookController {
     }
   };
 
+  static getOne = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const result = await books.findById(id);
+      res.status(200).json(result);
+    } catch (err) {
+      return res.status(400).json({ message: err.message });
+    }
+  };
+
   static create = async (req, res) => {
     const book = new books(req.body);
     try {
@@ -29,6 +39,18 @@ class BookController {
       res
         .status(200)
         .json({ message: "Book updated successfully", book: book });
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  };
+
+  static delete = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const book = await books.findByIdAndDelete(id);
+      res
+        .status(200)
+        .json({ message: "Book deleted successfully", book: book });
     } catch (err) {
       return res.status(500).json({ message: err.message });
     }
