@@ -4,7 +4,28 @@ class AuthorController {
   static getAll = async (req, res) => {
     try {
       const result = await authors.find({});
-      res.status(200).json(result);
+      const authorsWithLinks = result.map((author) => {
+        const authorWithLink = author.toJSON();
+        authorWithLink.links = [
+          {
+            href: `/authors/${author._id}`,
+            rel: "self",
+            method: "GET",
+          },
+          {
+            href: `/authors/${author._id}`,
+            rel: "update",
+            method: "PUT",
+          },
+          {
+            href: `/authors/${author._id}`,
+            rel: "delete",
+            method: "DELETE",
+          },
+        ];
+        return authorWithLink;
+      });
+      res.status(200).json(authorsWithLinks);
     } catch (err) {
       return res.status(500).json({ message: err.message });
     }
@@ -14,7 +35,25 @@ class AuthorController {
     const { id } = req.params;
     try {
       const result = await authors.findById(id);
-      res.status(200).json(result);
+      const autorWithLink = result.toJSON();
+      autorWithLink.links = [
+        {
+          href: `/authors/${autorWithLink._id}`,
+          rel: "self",
+          method: "GET",
+        },
+        {
+          href: `/authors/${autorWithLink._id}`,
+          rel: "update",
+          method: "PUT",
+        },
+        {
+          href: `/authors/${autorWithLink._id}`,
+          rel: "delete",
+          method: "DELETE",
+        },
+      ];
+      res.status(200).json(authorWithLink);
     } catch (err) {
       return res.status(400).json({ message: err.message });
     }
